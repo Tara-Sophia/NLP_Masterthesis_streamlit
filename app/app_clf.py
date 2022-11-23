@@ -100,15 +100,21 @@ def get_words(x, feat_importance):
         return words
 
 
-def clf_main(text: str) -> None:
+def clf_main(str_clf: str) -> None:
     """
     Main function for the classification part of the project
+
+    Parameters
+    ----------
+    str_clf : str
+        String from nlp part of the project
     """
+
     st.title("Classification")
     # Load model
     model = pickle.load(open(LR_MODEL_MASKED, "rb"))
 
-    prediction = predict_probability(model, [text])
+    prediction = predict_probability(model, [str_clf])
     prob1 = prediction["Probability"][0]
     prob2 = prediction["Probability"][1]
     prob3 = prediction["Probability"][2]
