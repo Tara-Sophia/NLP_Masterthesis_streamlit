@@ -3,13 +3,14 @@
 Description:
     Implementation of the Streamlit app for the classification part of the project
 """
-from imblearn.pipeline import Pipeline
-import pandas as pd
 import pickle
+
+import pandas as pd
+import streamlit as st
+from imblearn.pipeline import Pipeline
 from lime.lime_text import LimeTextExplainer
 
-import streamlit as st
-from src.clf.constants import LR_MODEL_MASKED
+LR_MODEL_MASKED = ""
 
 
 def predict_probability(model: Pipeline, value: str) -> pd.DataFrame:

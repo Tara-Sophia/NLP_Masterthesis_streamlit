@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+librosa = "*"
+numpy = "*"
+pandas = "*"
+pre-commit = "*"
+pydub = "*"
+scikit-learn = "*"
+streamlit = "*"
+streamlit-audiorecorder = "*"
+torch = "*"
+transformers = "*"
+unidecode = "*"
+black = "*"
+lime = "*"
+imbalanced-learn = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"

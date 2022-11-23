@@ -4,14 +4,14 @@ Description:
     Implementation of the Streamlit app
 
 Usage:
-    $ streamlit run src/streamlit/app.py
+    $ streamlit run app/app.py
 """
-import streamlit as st
-from src.streamlit.app_clf import clf_main
-from src.streamlit.app_nlp import nlp_main
-from src.streamlit.app_stt import stt_main
-
 import time
+
+import streamlit as st
+from app_clf import clf_main
+from app_nlp import nlp_main
+from app_stt import stt_main
 
 # Settings
 st.set_page_config(layout="wide")
