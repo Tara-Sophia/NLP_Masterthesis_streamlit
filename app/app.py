@@ -9,10 +9,9 @@ Usage:
 import time
 
 import streamlit as st
-
-from app.app_clf import clf_main
-from app.app_nlp import nlp_main
-from app.app_stt import stt_main
+from app_clf import clf_main
+from app_nlp import nlp_main
+from app_stt import stt_main
 
 # Settings
 st.set_page_config(layout="wide")

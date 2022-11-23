@@ -3,13 +3,15 @@
 Description:
     Implementation of the Streamlit app for the speech-to-text part of the project
 """
+import os
+
 import streamlit as st
 import torch
 from audiorecorder import audiorecorder
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor, pipeline  # HubertForCTC,
 
-VOCAB_DIR = "src/stt/vocab"
-WAV2VEC2_MODEL_DIR = ""
+VOCAB_DIR = os.path.join("models", "stt", "vocab")
+WAV2VEC2_MODEL_DIR = os.path.join("models", "stt", "wav2vec2", "model")
 
 
 def get_device() -> torch.device:
@@ -55,7 +57,6 @@ def stt_main() -> str | None:
     str
         Transcription of the audio file
     """
-    return st.write("Speech-to-text not implemented yet")
     st.title("🎙️ Audio Recorder")
     audio = audiorecorder("Click to record", "Click to stop")
 
