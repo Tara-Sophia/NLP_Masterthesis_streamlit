@@ -1,0 +1,58 @@
+# -*- coding: utf-8 -*-
+"""
+Description:
+    Implementation of the Streamlit app
+
+Usage:
+    $ streamlit run app/app.py
+"""
+import time
+
+import streamlit as st
+
+from app.app_clf import clf_main
+from app.app_nlp import nlp_main
+from app.app_stt import stt_main
+
+# Settings
+st.set_page_config(layout="wide")
+
+# Title
+st.title("Masterthesis Demo")
+st.text("This is a demo of the masterthesis project.")
+
+# Sidebar (Only for demo purposes)
+st.sidebar.title("Debug options")
+debug = st.sidebar.checkbox("Debug mode", value=False)
+
+# Initialization
+if "show_page" not in st.session_state:
+    st.session_state["show_page"] = "stt"
+
+if "res" not in st.session_state:
+    st.session_state["res"] = None
+
+
+# Speech-to-text
+if st.session_state.get("show_page") == "stt":  # type: ignore
+    st.session_state["res"] = stt_main()
+    if st.session_state.get("res"):
+        st.session_state["show_page"] = "nlp"
+        time.sleep(2)
+        st.experimental_rerun()
+
+# NLP
+elif st.session_state.get("show_page") == "nlp":
+    st.session_state["res"] = nlp_main(st.session_state.get("res"))
+    next = st.button("Show next")
+    if next:
+        st.session_state["show_page"] = "clf"
+        st.experimental_rerun()
+
+# CLF
+else:
+    clf_main(st.session_state.get("res"))
+    redo = st.button("Rerun with new input")
+    if redo:
+        st.session_state["show_page"] = "stt"
+        st.experimental_rerun()
