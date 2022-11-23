@@ -3,6 +3,7 @@
 Description:
     Implementation of the Streamlit app for the classification part of the project
 """
+import os
 import pickle
 
 import pandas as pd
@@ -10,7 +11,7 @@ import streamlit as st
 from imblearn.pipeline import Pipeline
 from lime.lime_text import LimeTextExplainer
 
-LR_MODEL_MASKED = ""
+LR_MODEL_MASKED = os.path.join("models", "clf", "lr_model_masked.pkl")
 
 
 def predict_probability(model: Pipeline, value: list[str]) -> pd.DataFrame:
@@ -60,7 +61,7 @@ def top_symptoms(model: Pipeline) -> pd.Series:
     return top
 
 
-def lime_explainer(model: Pipeline, value: str):
+def lime_explainer(model: Pipeline, value: str) -> dict:
     """
     Get features the model used for top predicted classes
     Parameters
@@ -93,7 +94,22 @@ def lime_explainer(model: Pipeline, value: str):
     return feat_importance_pos
 
 
-def get_words(x, feat_importance):
+def get_words(x, feat_importance) -> list[str]:
+    """
+    Get words from sample the model used to predict classes
+
+    Parameters
+    ----------
+    x : _type_
+
+    feat_importance : _type_
+        _description_
+
+    Returns
+    -------
+    list[str]
+        _description_
+    """
     if x in feat_importance:
         value = feat_importance[x]
         words = [v[0] for v in value]
@@ -127,7 +143,7 @@ def clf_main(str_clf: str) -> None:
     top_symptoms_3 = top[prediction.index[2]]
 
     # find the value of top symptoms from lime
-    feat_importance = lime_explainer(model, text)
+    feat_importance = lime_explainer(model, str_clf)
     top_symptoms_1_lime = get_words(prediction.index[0], feat_importance)
     top_symptoms_2_lime = get_words(prediction.index[1], feat_importance)
     top_symptoms_3_lime = get_words(prediction.index[2], feat_importance)
@@ -164,3 +180,6 @@ def clf_main(str_clf: str) -> None:
         st.write(top_symptoms_3_lime)
         st.write("Most relevant symptoms for this department in general:")
         st.write(top_symptoms_3)
+
+
+clf_main("I have a headache and I feel sick")
