@@ -61,7 +61,7 @@ def top_symptoms(model: Pipeline) -> pd.Series:
     return top
 
 
-def lime_explainer(model: Pipeline, value: str) -> dict:
+def lime_explainer(model: Pipeline, value: str) -> dict[str, list[tuple[str, float]]]:
     """
     Get features the model used for top predicted classes
     Parameters
@@ -72,7 +72,7 @@ def lime_explainer(model: Pipeline, value: str) -> dict:
         sample
     Returns
     -------
-    dict
+    dict[str, list[tuple[str, float]]]
         Features from sample the model used to predict classes
     """
     explainer = LimeTextExplainer(class_names=model.classes_)
@@ -94,26 +94,29 @@ def lime_explainer(model: Pipeline, value: str) -> dict:
     return feat_importance_pos
 
 
-def get_words(x, feat_importance) -> list[str]:
+def get_words(
+    x: str, feat_importance: dict[str, list[tuple[str, float]]]
+) -> list[str] | None:
     """
     Get words from sample the model used to predict classes
 
     Parameters
     ----------
-    x : _type_
-
-    feat_importance : _type_
-        _description_
+    x : str
+        Name of class
+    feat_importance : dict[str, list[tuple[str, float]]]
+        Features from sample the model used to predict classes
 
     Returns
     -------
-    list[str]
-        _description_
+    list[str] | None
+        Words from sample the model used to predict classes
     """
     if x in feat_importance:
         value = feat_importance[x]
         words = [v[0] for v in value]
         return words
+    return None
 
 
 def clf_main(str_clf: str) -> None:
@@ -180,6 +183,3 @@ def clf_main(str_clf: str) -> None:
         st.write(top_symptoms_3_lime)
         st.write("Most relevant symptoms for this department in general:")
         st.write(top_symptoms_3)
-
-
-clf_main("I have a headache and I feel sick")
