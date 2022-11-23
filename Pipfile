@@ -18,6 +18,7 @@ unidecode = "*"
 black = "*"
 lime = "*"
 imbalanced-learn = "*"
+mypy = "*"
 
 [dev-packages]
 

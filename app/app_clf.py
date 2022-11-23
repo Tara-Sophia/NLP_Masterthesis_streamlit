@@ -13,7 +13,7 @@ from lime.lime_text import LimeTextExplainer
 LR_MODEL_MASKED = ""
 
 
-def predict_probability(model: Pipeline, value: str) -> pd.DataFrame:
+def predict_probability(model: Pipeline, value: list[str]) -> pd.DataFrame:
     """
     get probabilities for sample
 
@@ -21,7 +21,7 @@ def predict_probability(model: Pipeline, value: str) -> pd.DataFrame:
     ----------
     model : imblearn.pipeline.Pipeline
         best model from train.py
-    value : str
+    value : list[str]
         sample
 
     Returns
@@ -158,4 +158,3 @@ def clf_main(text: str) -> None:
         st.write(top_symptoms_3_lime)
         st.write("Most relevant symptoms for this department in general:")
         st.write(top_symptoms_3)
-    pass
